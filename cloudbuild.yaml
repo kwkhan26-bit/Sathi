@@ -1,0 +1,36 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/sathi', '.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/sathi']
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'sathi'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/sathi'
+      - '--region'
+      - 'us-central1'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+      - '--set-env-vars'
+      - 'GEMINI_API_KEY=$_GEMINI_API_KEY'
+images:
+  - 'gcr.io/$PROJECT_ID/sathi'
+```
+
+Your folder should now look like this:
+```
+sathi/
+├── .env
+├── prompts.py
+├── main.py
+├── Dockerfile
+├── requirements.txt
+├── cloudbuild.yaml
+└── static/
+    └── index.html
+    
