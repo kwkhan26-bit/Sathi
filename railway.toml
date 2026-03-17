@@ -1,0 +1,6 @@
+[deploy]
+healthcheckPath = "/"
+healthcheckTimeout = 300
+
+[[services]]
+protocol = "tcp"
