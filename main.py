@@ -21,7 +21,7 @@ app.add_middleware(
 )
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
-MODEL = "gemini-live-2.5-flash-preview"
+MODEL = "gemini-2.0-flash-exp"
 
 @app.websocket("/ws/{mode}")
 async def websocket_endpoint(websocket: WebSocket, mode: str = "default"):
