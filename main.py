@@ -3,7 +3,6 @@ import json
 import asyncio
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
@@ -30,7 +29,7 @@ async def websocket_endpoint(websocket: WebSocket, mode: str = "default"):
             voice_config=types.VoiceConfig(
                 prebuilt_voice_config=types.PrebuiltVoiceConfig(voice_name="Leda")
             )
-        )
+        ),
     )
     
     try:
@@ -40,12 +39,18 @@ async def websocket_endpoint(websocket: WebSocket, mode: str = "default"):
             async def receive_from_client():
                 try:
                     while True:
-                        data = await websocket.receive_bytes()
-                        await session.send(
-                            input=types.LiveClientRealtimeInput(
-                                media_chunks=[types.Blob(data=data, mime_type="audio/pcm")]
+                        try:
+                            data = await asyncio.wait_for(
+                                websocket.receive_bytes(), 
+                                timeout=30.0
                             )
-                        )
+                            await session.send(
+                                input=types.LiveClientRealtimeInput(
+                                    media_chunks=[types.Blob(data=data, mime_type="audio/pcm")]
+                                )
+                            )
+                        except asyncio.TimeoutError:
+                            continue
                 except WebSocketDisconnect:
                     print("Client disconnected")
                 except Exception as e:
