@@ -18,30 +18,16 @@
     gap: 32px;
     padding: 24px;
   }
-
   .logo {
     font-size: 42px;
     font-weight: 800;
-    background: linear-gradient(135deg, #a78bfa, #60a5fa, #1efdab);
+    background: linear-gradient(135deg, #a78bfa, #60a5fa, #34d399);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -1px;
   }
-
-  .tagline {
-    font-size: 15px;
-    color: #6b7280;
-    text-align: center;
-    margin-top: -20px;
-  }
-
-  .modes {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
+  .tagline { font-size: 15px; color: #6b7280; text-align: center; margin-top: -20px; }
+  .modes { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
   .mode-btn {
     padding: 8px 18px;
     border-radius: 999px;
@@ -53,20 +39,12 @@
     cursor: pointer;
     transition: all 0.2s;
   }
-
   .mode-btn:hover { border-color: #6b7280; color: #fff; }
-
-  .mode-btn.active {
-    background: #1e1b4b;
-    border-color: #a78bfa;
-    color: #a78bfa;
-  }
-
+  .mode-btn.active { background: #1e1b4b; border-color: #a78bfa; color: #a78bfa; }
   .mode-btn.active.slow { background: #1a2e1a; border-color: #34d399; color: #34d399; }
   .mode-btn.active.quiz { background: #1a1a2e; border-color: #60a5fa; color: #60a5fa; }
   .mode-btn.active.debate { background: #2e1a1a; border-color: #f87171; color: #f87171; }
   .mode-btn.active.classroom { background: #2e2a1a; border-color: #fbbf24; color: #fbbf24; }
-
   .orb-container {
     position: relative;
     width: 180px;
@@ -75,7 +53,6 @@
     align-items: center;
     justify-content: center;
   }
-
   .orb {
     width: 120px;
     height: 120px;
@@ -88,54 +65,33 @@
     justify-content: center;
     font-size: 36px;
     box-shadow: 0 0 40px rgba(167, 139, 250, 0.3);
+    position: relative;
+    z-index: 10;
+    user-select: none;
   }
-
   .orb:hover { transform: scale(1.05); }
-
   .orb.listening {
     animation: pulse 1.5s ease-in-out infinite;
     background: linear-gradient(135deg, #f87171, #a78bfa);
     box-shadow: 0 0 60px rgba(248, 113, 113, 0.4);
   }
-
   .orb.speaking {
     animation: speak 0.8s ease-in-out infinite alternate;
     background: linear-gradient(135deg, #34d399, #60a5fa);
     box-shadow: 0 0 60px rgba(52, 211, 153, 0.4);
   }
-
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.08); }
-  }
-
-  @keyframes speak {
-    from { transform: scale(1); }
-    to { transform: scale(1.06); }
-  }
-
+  @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+  @keyframes speak { from { transform: scale(1); } to { transform: scale(1.06); } }
   .ring {
     position: absolute;
     border-radius: 50%;
     border: 1.5px solid rgba(167, 139, 250, 0.2);
     animation: ringPulse 2s ease-out infinite;
   }
-
-  .ring:nth-child(1) { width: 140px; height: 140px; animation-delay: 0s; }
+  .ring:nth-child(1) { width: 140px; height: 140px; }
   .ring:nth-child(2) { width: 165px; height: 165px; animation-delay: 0.5s; }
-
-  @keyframes ringPulse {
-    0% { opacity: 0.5; transform: scale(0.95); }
-    100% { opacity: 0; transform: scale(1.1); }
-  }
-
-  .status {
-    font-size: 14px;
-    color: #6b7280;
-    text-align: center;
-    min-height: 20px;
-  }
-
+  @keyframes ringPulse { 0% { opacity: 0.5; transform: scale(0.95); } 100% { opacity: 0; transform: scale(1.1); } }
+  .status { font-size: 14px; color: #6b7280; text-align: center; min-height: 20px; }
   .transcript {
     width: 100%;
     max-width: 480px;
@@ -148,40 +104,15 @@
     flex-direction: column;
     gap: 8px;
   }
-
-  .message {
-    font-size: 13px;
-    line-height: 1.5;
-    padding: 8px 12px;
-    border-radius: 10px;
-  }
-
-  .message.sathi {
-    background: #1e1b4b;
-    color: #c4b5fd;
-    align-self: flex-start;
-    max-width: 85%;
-  }
-
-  .message.user {
-    background: #1f2937;
-    color: #9ca3af;
-    align-self: flex-end;
-    max-width: 85%;
-  }
-
-  .hint {
-    font-size: 12px;
-    color: #374151;
-    text-align: center;
-  }
+  .message { font-size: 13px; line-height: 1.5; padding: 8px 12px; border-radius: 10px; }
+  .message.sathi { background: #1e1b4b; color: #c4b5fd; align-self: flex-start; max-width: 85%; }
+  .message.user { background: #1f2937; color: #9ca3af; align-self: flex-end; max-width: 85%; }
+  .hint { font-size: 12px; color: #374151; text-align: center; }
 </style>
 </head>
 <body>
-
 <div class="logo">sathi ✦</div>
 <p class="tagline">your 2am AI best friend — always here, never judging</p>
-
 <div class="modes">
   <button class="mode-btn active" data-mode="default" onclick="setMode('default', this)">✨ vibe</button>
   <button class="mode-btn slow" data-mode="slow" onclick="setMode('slow', this)">🐢 slow mode</button>
@@ -189,38 +120,32 @@
   <button class="mode-btn debate" data-mode="debate" onclick="setMode('debate', this)">🥊 debate</button>
   <button class="mode-btn classroom" data-mode="classroom" onclick="setMode('classroom', this)">🏫 classroom</button>
 </div>
-
 <div class="orb-container">
   <div class="ring"></div>
   <div class="ring"></div>
-  <div class="orb" id="orb" onclick="toggleListening()" style="position:relative;z-index:10;">🎙️</div>
+  <div class="orb" id="orb" onclick="toggleListening()">🎙️</div>
 </div>
-
 <div class="status" id="status">tap to start talking to sathi</div>
-
 <div class="transcript" id="transcript">
   <div class="message sathi">hey! i'm sathi 👋 tap the orb and let's talk. i'm here for whatever — homework, stress, just vibing 💜</div>
 </div>
-
 <p class="hint">sathi speaks your language • emotionally aware • always available</p>
 
 <script>
 let ws = null;
-let mediaRecorder = null;
-let audioContext = null;
 let currentMode = 'default';
 let isListening = false;
 let audioQueue = [];
 let isPlaying = false;
+let mediaStream = null;
+let audioWorkletNode = null;
+let audioCtx = null;
 
 function setMode(mode, btn) {
   currentMode = mode;
   document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  if (isListening) {
-    stopListening();
-    setTimeout(() => startListening(), 300);
-  }
+  if (isListening) { stopListening(); setTimeout(() => startListening(), 300); }
   addMessage('sathi', getModeMessage(mode));
 }
 
@@ -235,25 +160,26 @@ function getModeMessage(mode) {
   return msgs[mode];
 }
 
-async function toggleListening() {
-  if (isListening) {
-    stopListening();
-  } else {
-    await startListening();
-  }
+function toggleListening() {
+  if (isListening) { stopListening(); } else { startListening(); }
 }
 
 async function startListening() {
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    audioContext = new AudioContext({ sampleRate: 16000 });
-
-    ws = new WebSocket(`wss://sathi-production.up.railway.app/ws/${currentMode}`);
+    setStatus('connecting... ⏳');
+    
+    const wsUrl = window.location.hostname === 'localhost' 
+      ? `ws://localhost:8000/ws/${currentMode}`
+      : `wss://sathi-production.up.railway.app/ws/${currentMode}`;
+    
+    ws = new WebSocket(wsUrl);
     ws.binaryType = 'arraybuffer';
 
-    ws.onopen = () => {
+    ws.onopen = async () => {
       setStatus('listening... 🎙️');
       setOrb('listening');
+      isListening = true;
+      await startMic();
     };
 
     ws.onmessage = async (event) => {
@@ -261,21 +187,29 @@ async function startListening() {
         audioQueue.push(event.data);
         if (!isPlaying) playNextAudio();
       } else {
-        const msg = JSON.parse(event.data);
-        if (msg.text) addMessage('sathi', msg.text);
-        if (msg.error) setStatus('error: ' + msg.error);
+        try {
+          const msg = JSON.parse(event.data);
+          if (msg.text) addMessage('sathi', msg.text);
+          if (msg.error) { setStatus('error: ' + msg.error); stopListening(); }
+        } catch(e) {}
       }
     };
 
-    ws.onclose = () => {
-      setStatus('tap to start talking to sathi');
-      setOrb('idle');
-      isListening = false;
-    };
+    ws.onerror = (e) => { setStatus('connection error 😕'); console.error(e); stopListening(); };
+    ws.onclose = () => { if (isListening) { setStatus('tap to start talking to sathi'); setOrb('idle'); isListening = false; stopMic(); } };
 
-    const source = audioContext.createMediaStreamSource(stream);
-    const processor = audioContext.createScriptProcessor(4096, 1, 1);
+  } catch (err) {
+    setStatus('error: ' + err.message);
+    console.error(err);
+  }
+}
 
+async function startMic() {
+  try {
+    mediaStream = await navigator.mediaDevices.getUserMedia({ audio: { sampleRate: 16000, channelCount: 1, echoCancellation: true, noiseSuppression: true } });
+    audioCtx = new AudioContext({ sampleRate: 16000 });
+    const source = audioCtx.createMediaStreamSource(mediaStream);
+    const processor = audioCtx.createScriptProcessor(2048, 1, 1);
     processor.onaudioprocess = (e) => {
       if (ws && ws.readyState === WebSocket.OPEN) {
         const float32 = e.inputBuffer.getChannelData(0);
@@ -286,31 +220,30 @@ async function startListening() {
         ws.send(int16.buffer);
       }
     };
-
     source.connect(processor);
-    processor.connect(audioContext.destination);
-    isListening = true;
-
-  } catch (err) {
+    processor.connect(audioCtx.destination);
+  } catch(err) {
     setStatus('mic access needed 🎙️');
     console.error(err);
+    stopListening();
   }
 }
 
+function stopMic() {
+  if (mediaStream) { mediaStream.getTracks().forEach(t => t.stop()); mediaStream = null; }
+  if (audioCtx) { audioCtx.close(); audioCtx = null; }
+}
+
 function stopListening() {
-  if (ws) ws.close();
-  if (audioContext) audioContext.close();
   isListening = false;
+  stopMic();
+  if (ws) { ws.close(); ws = null; }
   setOrb('idle');
   setStatus('tap to start talking to sathi');
 }
 
 async function playNextAudio() {
-  if (audioQueue.length === 0) {
-    isPlaying = false;
-    setOrb(isListening ? 'listening' : 'idle');
-    return;
-  }
+  if (audioQueue.length === 0) { isPlaying = false; setOrb(isListening ? 'listening' : 'idle'); return; }
   isPlaying = true;
   setOrb('speaking');
   const buffer = audioQueue.shift();
@@ -335,9 +268,7 @@ function setOrb(state) {
   else { orb.textContent = '🎙️'; }
 }
 
-function setStatus(msg) {
-  document.getElementById('status').textContent = msg;
-}
+function setStatus(msg) { document.getElementById('status').textContent = msg; }
 
 function addMessage(role, text) {
   const div = document.createElement('div');
