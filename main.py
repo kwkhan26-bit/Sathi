@@ -4,6 +4,7 @@ import asyncio
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
@@ -12,16 +13,22 @@ from prompts import SYSTEM_PROMPTS
 load_dotenv()
 
 app = FastAPI()
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 MODEL = "gemini-2.0-flash-live-001"
 
 @app.websocket("/ws/{mode}")
 async def websocket_endpoint(websocket: WebSocket, mode: str = "default"):
     await websocket.accept()
-    
     system_prompt = SYSTEM_PROMPTS.get(mode, SYSTEM_PROMPTS["default"])
-    
     config = types.LiveConnectConfig(
         response_modalities=["AUDIO"],
         system_instruction=system_prompt,
@@ -31,7 +38,6 @@ async def websocket_endpoint(websocket: WebSocket, mode: str = "default"):
             )
         )
     )
-    
     try:
         async with client.aio.live.connect(model=MODEL, config=config) as session:
             async def receive_from_client():
@@ -57,7 +63,11 @@ async def websocket_endpoint(websocket: WebSocket, mode: str = "default"):
             await asyncio.gather(receive_from_client(), send_to_client())
 
     except Exception as e:
-        await websocket.send_text(json.dumps({"error": str(e)}))
-        await websocket.close()
+        print(f"Error: {e}")
+        try:
+            await websocket.send_text(json.dumps({"error": str(e)}))
+            await websocket.close()
+        except:
+            pass
 
 app.mount("/", StaticFiles(directory="static", html=True), name="static")
