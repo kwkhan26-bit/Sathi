@@ -21,7 +21,7 @@ app.add_middleware(
 )
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
-MODEL = "gemini-2.0-flash-exp"
+MODEL = "gemini-2.5-flash-native-audio-latest"
 
 @app.websocket("/ws/{mode}")
 async def websocket_endpoint(websocket: WebSocket, mode: str = "default"):
@@ -31,14 +31,19 @@ async def websocket_endpoint(websocket: WebSocket, mode: str = "default"):
     system_prompt = SYSTEM_PROMPTS.get(mode, SYSTEM_PROMPTS["default"])
     
     config = types.LiveConnectConfig(
-        response_modalities=["AUDIO"],
-        system_instruction=system_prompt,
-        speech_config=types.SpeechConfig(
-            voice_config=types.VoiceConfig(
-                prebuilt_voice_config=types.PrebuiltVoiceConfig(voice_name="Leda")
-            )
-        ),
-    )
+    response_modalities=["AUDIO"],
+    system_instruction=system_prompt,
+    speech_config=types.SpeechConfig(
+        voice_config=types.VoiceConfig(
+            prebuilt_voice_config=types.PrebuiltVoiceConfig(voice_name="Aoede")
+        )
+    ),
+    realtime_input_config=types.RealtimeInputConfig(
+        automatic_activity_detection=types.AutomaticActivityDetection(
+            disabled=False,
+        )
+    ),
+)
     
     try:
         async with client.aio.live.connect(model=MODEL, config=config) as session:

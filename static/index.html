@@ -209,7 +209,7 @@ async function startMic() {
     mediaStream = await navigator.mediaDevices.getUserMedia({ audio: { sampleRate: 16000, channelCount: 1, echoCancellation: true, noiseSuppression: true } });
     audioCtx = new AudioContext({ sampleRate: 16000 });
     const source = audioCtx.createMediaStreamSource(mediaStream);
-    const processor = audioCtx.createScriptProcessor(2048, 1, 1);
+    const processor = audioCtx.createScriptProcessor(4096, 1, 1);
     processor.onaudioprocess = (e) => {
       if (ws && ws.readyState === WebSocket.OPEN) {
         const float32 = e.inputBuffer.getChannelData(0);
